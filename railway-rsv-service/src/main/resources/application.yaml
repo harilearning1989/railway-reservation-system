@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: railway-reservation-system
+  main:
+    banner-mode: off
+  messages:
+    basename: messages
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
