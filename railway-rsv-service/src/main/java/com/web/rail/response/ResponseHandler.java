@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ResponseHandler {
     public static GlobalResponse generateResponse(String message, HttpStatus status, Object data) {
@@ -27,8 +28,8 @@ public class ResponseHandler {
         return globalResponse;
     }
 
-    public static AuthResponse getAuthResponse(String token, HttpStatus status, String username) {
-        return new AuthResponse(token, username, status.value());
+    public static AuthResponse getAuthResponse(String token, HttpStatus status, String username, Set<String> roles) {
+        return new AuthResponse(token, username, roles, status.value());
     }
 
     public static ResponseEntity<GlobalResponse> generateResponseTmp(String message, HttpStatus status, Object data) {

@@ -1,0 +1,15 @@
+/* src/app/pharmacy-login/pharmacy-login.component.css */
+.container {
+  background-image: url('/images/pharmacy-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background for the card */
+}

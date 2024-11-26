@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="card p-4" style="width: 25rem;">
+    <h3 class="card-title text-center errorGlobal">Pharmacy Login</h3>
+    <form (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="username" class="form-label style-weight">Username</label>
+        <input type="text" class="form-control" id="username" [(ngModel)]="username"
+               placeholder="Enter Username" name="username" appNoSpaces required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label style-weight">Password</label>
+        <input type="password" class="form-control" id="password" [(ngModel)]="password"
+               placeholder="Enter Password" name="password" appNoSpaces required>
+      </div>
+      <br/>
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+      <button type="submit" class="btn btn-primary w-100 style-weight">Login</button>
+      <button type="button" class="btn btn-secondary w-100 mt-2 style-weight" (click)="onRegister()">Register</button>
+    </form>
+  </div>
+</div>
