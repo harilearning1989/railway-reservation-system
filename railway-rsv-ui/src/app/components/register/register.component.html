@@ -1,1 +1,81 @@
-<p>register works!</p>
+<div class="container">
+  <div class="card p-4" style="width: 50rem;">
+    <h3 class="card-title text-center errorGlobal">Passenger Registration</h3>
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="mb-3">
+          <label for="fullName" class="style-weight">Full Name</label>
+          <input id="fullName" class="form-control" formControlName="fullName" type="text"
+                 placeholder="Enter First Name" appOnlyAlphabets>
+          <div *ngIf="registrationForm.get('fullName')?.invalid
+            && registrationForm.get('fullName')?.touched" class="error">
+            First name must contain only alphabets without spaces.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="username" class="style-weight">Username</label>
+          <input id="username" class="form-control" formControlName="username"
+                 placeholder="Enter Username" type="text" appNoSpaces>
+          <div *ngIf="registrationForm.get('username')?.invalid
+            && registrationForm.get('username')?.touched" class="error">
+            User name must contain without spaces.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="password" class="style-weight">Password</label>
+          <input id="password" class="form-control" formControlName="password" type="password"
+                 placeholder="Enter Password" appOnlyAlphabets>
+          <div *ngIf="registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched"
+               class="error">
+            password must contain only alphabets without spaces.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="style-weight">Email</label>
+          <input id="email" class="form-control" formControlName="email" type="email"
+                 placeholder="Enter Email" appNoSpaces>
+          <div *ngIf="registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched" class="error">
+            Enter a valid email address.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="dateOfBirth">Date of Birth</label>
+          <input id="dateOfBirth" type="date" formControlName="dateOfBirth" class="form-control" [attr.max]="maxDate"/>
+          <div
+            *ngIf="submitted && registrationForm.get('dateOfBirth')?.invalid"
+            class="text-danger">
+            Date of Birth is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="style-weight">Phone Number</label>
+          <input id="phone" class="form-control" formControlName="phone" type="text"
+                 placeholder="Enter Phone Number" appOnlyNumbers>
+          <div *ngIf="registrationForm.get('phone')?.invalid && registrationForm.get('phone')?.touched" class="error">
+            Enter a valid phone number.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="gender" class="style-weight">Gender</label>
+          <select id="gender" formControlName="gender" class="form-control">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="others">Others</option>
+          </select>
+          <div *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched"
+               class="error">
+            Please select a gender.
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
+      <br/>
+      <button type="submit" class="btn btn-primary w-100 style-weight">Register</button>
+      <button type="button" class="btn btn-secondary w-100 mt-2 style-weight" (click)="login()">Login</button>
+    </form>
+  </div>
+</div>

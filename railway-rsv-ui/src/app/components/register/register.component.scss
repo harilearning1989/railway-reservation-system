@@ -1,0 +1,20 @@
+/* src/app/pharmacy-login/pharmacy-login.component.css */
+.container {
+  background-image: url('/assets/images/pharmacy-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background for the card */
+}
+.error {
+  color: red;
+  font-size: 0.875em; /* Adjust the font size as needed */
+  margin-top: 0.25em; /* Add some spacing above the error message */
+}

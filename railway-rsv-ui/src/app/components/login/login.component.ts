@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../services/login.service';
 import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-login',
   imports: [
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -32,6 +34,6 @@ export class LoginComponent {
 
   onRegister() {
     // Navigate to the registration page
-    this.router.navigate(['/pharmacy-register']);
+    this.router.navigate(['/register']);
   }
 }

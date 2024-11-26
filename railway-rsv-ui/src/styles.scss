@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+//@import 'bootstrap-icons/font/bootstrap-icons';
+
+/* You can add global styles to this file, and also import other style files */
+
+.errorGlobal {
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.style-weight {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 20px;
+}
+
+input:placeholder-shown {
+  font-style: italic;
+}
+
+.container-background-color {
+  background-color: #cccccc;
+}
