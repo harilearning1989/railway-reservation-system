@@ -37,8 +37,10 @@ public class Admin {
     @Column(name = "DOJ")
     String doj;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "USER_ID", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "USER_ID", nullable = false, unique = true)
     private Users users; // Many-to-One relationship with User
 
     @PrePersist

@@ -1,11 +1,13 @@
 package com.web.rail.services;
 
 import com.web.rail.dtos.AdminRequestDto;
+import com.web.rail.dtos.AdminResponseDTO;
 import com.web.rail.models.Admin;
 import com.web.rail.models.Role;
 import com.web.rail.models.Users;
 import com.web.rail.repos.AdminRepository;
 import com.web.rail.repos.RoleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,5 +58,43 @@ public class AdminServiceImpl implements AdminService {
         admin.dob(dto.dob());
         admin.doj(dto.doj());
         adminRepository.save(admin.build());
+    }
+
+    @Override
+    @Transactional
+    public AdminResponseDTO saveAdmin(AdminRequestDto dto) {
+        Users users = new Users();
+        users.setUsername(dto.username());
+        users.setPassword(passwordEncoder.encode(dto.password()));
+
+        // Set roles based on user selection
+        Set<Role> roles = new HashSet<>();
+        for (String roleName : dto.roles()) {
+            Role role = roleRepository.findByName(roleName)
+                    .orElseThrow(() -> new RuntimeException("Role not found"));
+            roles.add(role);
+        }
+
+        // Assign roles to the user
+        users.setRoles(roles);
+
+        users = userService.saveUsers(users);
+
+        Admin.AdminBuilder admin = Admin.builder();
+        admin.users(users);
+        admin.fullName(dto.fullName());
+        admin.userGender(dto.userGender());
+        admin.email(dto.email());
+        admin.phone(dto.phone());
+        admin.station(dto.station());
+        admin.dob(dto.dob());
+        admin.doj(dto.doj());
+        Admin savedAdmin = adminRepository.save(admin.build());
+        return new AdminResponseDTO(
+                savedAdmin.getId(),
+                users.getUsername(),
+                savedAdmin.getEmail(),
+                savedAdmin.getEmail()
+        );
     }
 }

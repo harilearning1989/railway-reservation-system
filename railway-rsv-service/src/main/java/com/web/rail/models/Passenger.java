@@ -33,8 +33,8 @@ public class Passenger {
     @Column(name = "DOB")
     String dob;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "USER_ID", nullable = false, unique = true)
     private Users users; // Many-to-One relationship with User
 
     @PrePersist

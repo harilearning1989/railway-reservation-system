@@ -1,5 +1,6 @@
 package com.web.rail.services;
 
+import com.web.rail.exceptions.ResourceNotFoundException;
 import com.web.rail.models.Users;
 import com.web.rail.repos.UserRepository;
 import org.springframework.stereotype.Service;
@@ -19,5 +20,8 @@ public class UserServiceImpl {
         return userRepository.save(users);
     }
 
+    public Users findById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+    }
 }
 

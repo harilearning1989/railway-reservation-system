@@ -1,6 +1,7 @@
 package com.web.rail.services;
 
 import com.web.rail.dtos.PassengerRequestDto;
+import com.web.rail.dtos.PassengerResponseDTO;
 import com.web.rail.models.Passenger;
 import com.web.rail.models.Role;
 import com.web.rail.models.Users;
@@ -30,7 +31,7 @@ public class PassengerServiceImpl implements PassengerService {
     }
 
     @Override
-    public void registerPassenger(PassengerRequestDto dto) {
+    public PassengerResponseDTO registerPassenger(PassengerRequestDto dto) {
         Users users = new Users();
         users.setUsername(dto.username());
         users.setPassword(passwordEncoder.encode(dto.password()));
@@ -46,13 +47,24 @@ public class PassengerServiceImpl implements PassengerService {
 
         users = userService.saveUsers(users);
 
-        Passenger.PassengerBuilder passenger = Passenger.builder();
-        passenger.users(users);
-        passenger.fullName(dto.fullName());
-        passenger.userGender(dto.userGender());
-        passenger.email(dto.email());
-        passenger.phone(dto.phone());
-        passenger.dob(dto.dob());
-        passengerRepository.save(passenger.build());
+        Passenger.PassengerBuilder passengerBuilder = Passenger.builder();
+        passengerBuilder.users(users);
+        passengerBuilder.fullName(dto.fullName());
+        passengerBuilder.userGender(dto.userGender());
+        passengerBuilder.email(dto.email());
+        passengerBuilder.phone(dto.phone());
+        passengerBuilder.dob(dto.dob());
+
+        Passenger passenger = passengerRepository.save(passengerBuilder.build());
+
+        return new PassengerResponseDTO(passenger.getId(),
+                users.getUsername(),
+                new HashSet<>(),
+                passenger.getPassengerId(),
+                passenger.getFullName(),
+                passenger.getEmail(),
+                passenger.getUserGender().name(),
+                passenger.getPhone(),
+                passenger.getDob());
     }
 }
