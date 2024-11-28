@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit{
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Validates a 10-digit phone number
       gender: ['', Validators.required], // Requires selection of a gender
       email: ['', [Validators.required, Validators.email]],
-      dateOfBirth: ['', [Validators.required]]
+      dob: ['', [Validators.required]]
     });
   }
 

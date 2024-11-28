@@ -39,10 +39,10 @@
           </div>
         </div>
         <div class="mb-3">
-          <label for="dateOfBirth">Date of Birth</label>
-          <input id="dateOfBirth" type="date" formControlName="dateOfBirth" class="form-control" [attr.max]="maxDate"/>
+          <label for="dob">Date of Birth</label>
+          <input id="dob" type="date" formControlName="dob" class="form-control" [attr.max]="maxDate"/>
           <div
-            *ngIf="submitted && registrationForm.get('dateOfBirth')?.invalid"
+            *ngIf="submitted && registrationForm.get('dob')?.invalid"
             class="text-danger">
             Date of Birth is required.
           </div>
@@ -59,9 +59,9 @@
           <label for="gender" class="style-weight">Gender</label>
           <select id="gender" formControlName="gender" class="form-control">
             <option value="">Select Gender</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="others">Others</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Others">Others</option>
           </select>
           <div *ngIf="registrationForm.get('gender')?.invalid && registrationForm.get('gender')?.touched"
                class="error">

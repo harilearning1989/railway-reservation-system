@@ -2,7 +2,6 @@ package com.web.rail.controls;
 
 import com.web.rail.constants.CommonConstants;
 import com.web.rail.dtos.*;
-import com.web.rail.models.Admin;
 import com.web.rail.models.Users;
 import com.web.rail.repos.UserRepository;
 import com.web.rail.response.AuthResponse;
@@ -15,7 +14,6 @@ import com.web.rail.utils.JwtTokenProvider;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,38 +37,46 @@ public class AuthRestController {
     private final AdminService adminService;
     private final EmployeeService employeeService;
     private final PassengerService passengerService;
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public AuthRestController(AuthenticationManager authenticationManager,
                               AdminService adminService,
                               EmployeeService employeeService,
-                              JwtTokenProvider jwtTokenProvider, PassengerService passengerService) {
+                              JwtTokenProvider jwtTokenProvider,
+                              PassengerService passengerService,
+                              UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.adminService = adminService;
         this.employeeService = employeeService;
         this.passengerService = passengerService;
+        this.userRepository = userRepository;
     }
 
     // Register Admin
     @PostMapping("/register/admin")
-    public ResponseEntity<String> registerAdmin(@Valid @RequestBody AdminRequestDto adminRequestDto) {
-        adminService.registerAdmin(adminRequestDto);
-        return ResponseEntity.ok("Admin registered successfully");
+    public GlobalResponse registerAdmin(@Valid @RequestBody AdminRequestDto adminRequestDto) {
+        LOGGER.info("The request entered into registerAdmin with the userId::{}", adminRequestDto.username());
+        AdminResponseDTO dto = adminService.registerAdmin(adminRequestDto);
+        return ResponseHandler.generateResponse(
+                String.format(CommonConstants.REGISTER_SUCCESS,
+                        CommonConstants.USER, adminRequestDto.username()), HttpStatus.OK, dto);
     }
 
     // Register Employee
     @PostMapping("/register/employee")
-    public ResponseEntity<String> registerEmployee(@Valid @RequestBody EmployeeRequestDto employeeRequestDto) {
-        employeeService.registerEmployee(employeeRequestDto);
-        return ResponseEntity.ok("Employee registered successfully");
+    public GlobalResponse registerEmployee(@Valid @RequestBody EmployeeRequestDto employeeRequestDto) {
+        LOGGER.info("The request entered into registerEmployee with the userId::{}", employeeRequestDto.username());
+        EmployeeResponseDTO dto = employeeService.registerEmployee(employeeRequestDto);
+        return ResponseHandler.generateResponse(
+                String.format(CommonConstants.REGISTER_SUCCESS,
+                        CommonConstants.USER, employeeRequestDto.username()), HttpStatus.OK, dto);
     }
 
     // Register Passenger
     @PostMapping("/register/passenger")
     public GlobalResponse registerPassenger(@Valid @RequestBody PassengerRequestDto passengerRequestDto) {
-        LOGGER.info("The request entered into registerUser with the userId::{}", passengerRequestDto.username());
+        LOGGER.info("The request entered into registerPassenger with the userId::{}", passengerRequestDto.username());
         /*if (userRepository.existsByUsername(signUpRequest.username())) {
             LOGGER.warn(String.format(CommonConstants.USER_NAME_ALREADY_EXISTS, signUpRequest.username()));
             return ResponseHandler.generateResponse(

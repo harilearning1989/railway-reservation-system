@@ -6,7 +6,7 @@ public record PassengerRequestDto(
         String username,
         String password,
         String fullName,
-        UserGender userGender,
+        UserGender gender,
         String email,
         String phone,
         String dob

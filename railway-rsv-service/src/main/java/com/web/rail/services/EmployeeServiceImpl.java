@@ -1,6 +1,9 @@
 package com.web.rail.services;
 
 import com.web.rail.dtos.EmployeeRequestDto;
+import com.web.rail.dtos.EmployeeResponseDTO;
+import com.web.rail.mappers.DataMappers;
+import com.web.rail.models.Admin;
 import com.web.rail.models.Employee;
 import com.web.rail.models.Role;
 import com.web.rail.models.Users;
@@ -19,20 +22,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final EmployeeRepository employeeRepository;
+    private final DataMappers dataMappers;
 
     public EmployeeServiceImpl(UserServiceImpl userService,
                                PasswordEncoder passwordEncoder,
                                RoleRepository roleRepository,
-                               EmployeeRepository employeeRepository) {
+                               EmployeeRepository employeeRepository, DataMappers dataMappers) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.employeeRepository = employeeRepository;
+        this.dataMappers = dataMappers;
     }
 
 
     @Override
-    public void registerEmployee(EmployeeRequestDto dto) {
+    public EmployeeResponseDTO registerEmployee(EmployeeRequestDto dto) {
         Users users = new Users();
         users.setUsername(dto.username());
         users.setPassword(passwordEncoder.encode(dto.password()));
@@ -48,15 +53,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         users = userService.saveUsers(users);
 
-        Employee.EmployeeBuilder employee = Employee.builder();
-        employee.users(users);
-        employee.fullName(dto.fullName());
-        employee.userGender(dto.userGender());
-        employee.email(dto.email());
-        employee.phone(dto.phone());
-        employee.station(dto.station());
-        employee.dob(dto.dob());
-        employee.doj(dto.doj());
-        employeeRepository.save(employee.build());
+        Employee employee = dataMappers.toEmployee(dto, users);
+        employee = employeeRepository.save(employee);
+        return dataMappers.toDto(users, employee);
     }
 }
