@@ -1,7 +1,7 @@
 package com.web.rail.enums;
 
 public enum TrainType {
-    EXPRESS,
+    Express,
     PASSENGER,
     LOCAL,
     FREIGHT,

@@ -15,8 +15,11 @@ import java.util.List;
 @RequestMapping("/stations")
 public class StationRestController {
 
-    @Autowired
-    private StationService stationService;
+    private final StationService stationService;
+
+    public StationRestController(StationService stationService) {
+        this.stationService = stationService;
+    }
 
     @GetMapping("findAll")
     public GlobalResponse getAllStations() {

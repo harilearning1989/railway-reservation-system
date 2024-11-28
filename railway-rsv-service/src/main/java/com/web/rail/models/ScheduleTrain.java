@@ -27,11 +27,11 @@ public class ScheduleTrain {
     private TrainDetails trainDetails;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "departure_station_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "departure_station_id", nullable = false, referencedColumnName = "STATION_ID")
     private Station departureStation;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "arrival_station_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "arrival_station_id", nullable = false, referencedColumnName = "STATION_ID")
     private Station arrivalStation;
 
     @Column(name = "DEPARTURE_TIME")
