@@ -1,1 +1,38 @@
-<p>station-details works!</p>
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col">
+      <!-- Search Input -->
+      <input type="text" class="form-control mb-3" [(ngModel)]="searchSaleText"
+             placeholder="Search Medicine,Sold Name,Sale Date,Customer Name,Phone Number..."/>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-light">
+      <tr>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Total Quantity</th>
+        <th>Total Price</th>
+        <th>Sold Name</th>
+        <th>Sale Date</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let sale of filteredData()">
+        <!--<td [title]="sale.description ?? ''">
+          {{ (sale.description?.length ?? 0) > 15 ? (sale.description | slice:0:15) + '...' : (sale.description ?? '') }}
+        </td>-->
+        <td>{{ sale.phoneNumber }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm">Details</button>&nbsp;
+          <button class="btn btn-primary btn-sm">Update</button>&nbsp;
+          <button class="btn btn-primary btn-sm">Delete</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,1 +1,90 @@
-<p>home works!</p>
+<!--<nav>
+  <a routerLink="/home">Home==={{authService.currentUserRole}}===</a>
+  <a *ngIf="authService.isAuthenticated" routerLink="/profile">Profile</a>
+
+  <a *ngIf="!authService.isAuthenticated" routerLink="/login">Login</a>
+  <a *ngIf="!authService.isAuthenticated" routerLink="/register">Register</a>
+  <a *ngIf="authService.isAuthenticated" (click)="logout()">Logout</a>
+
+  <a *ngIf="authService.hasAnyRole(['ROLE_USER', 'ROLE_ADMIN'])" routerLink="/register">===RegisterTemp===</a>
+  <a *ngIf="authService.hasRole('ROLE_ADMIN')" routerLink="/admin">Admin</a>
+</nav>
+<router-outlet></router-outlet>
+-->
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="padding-left: 50px">
+            <div class="sidebar-sticky">
+                <img src="../../../assets/images/user.jpeg" class="user-image"/>
+                <!--<h3 class="style-weight" style="color: blue">{{ authService.getUserRole() }}</h3>-->
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/dashboard']" routerLinkActive="active">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/station-details']" routerLinkActive="active">
+                            Station Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/train-details']" routerLinkActive="active">
+                            Train Details
+                        </a>
+                    </li>
+                   <!-- <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <a class="nav-link style-weight" [routerLink]="['/home/purchaseMedicine']" routerLinkActive="active">
+                            Purchase Medicine
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')">
+                        <a class="nav-link style-weight" [routerLink]="['/home/medicine']" routerLinkActive="active">
+                            Manage Medicine
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="authService.hasAnyRole(['ROLE_EMPLOYEE', 'ROLE_ADMIN'])">
+                        <a class="nav-link style-weight" [routerLink]="['/home/sales']" routerLinkActive="active">
+                            Manage Sales
+                        </a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/supplier']" routerLinkActive="active">
+                            Manage Supplier
+                        </a>
+                    </li>
+                    <!--<li class="nav-item" *ngIf="authService.hasAnyRole(['ROLE_EMPLOYEE', 'ROLE_ADMIN'])">
+                      <a class="nav-link style-weight" [routerLink]="['/home/invoice']" routerLinkActive="active">
+                        Invoice
+                      </a>
+                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/about-us']" routerLinkActive="active">
+                            AboutUs
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link style-weight" [routerLink]="['/home/contact-us']" routerLinkActive="active">
+                            ContactUs
+                        </a>
+                    </li>
+                    <!--<li class="nav-item">
+                      <a class="nav-link style-weight" [routerLink]="['/home/todos']" routerLinkActive="active">
+                        Todos
+                      </a>
+                    </li>-->
+                </ul>
+                <div style="padding-top: 30px;padding-left: 30px">
+                    <button class="btn btn-primary" (click)="logout()">Logout</button>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- Main content area -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <router-outlet></router-outlet> <!-- This router-outlet handles child routes -->
+        </main>
+    </div>
+</div>

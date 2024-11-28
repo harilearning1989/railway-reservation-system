@@ -22,14 +22,15 @@ export class LoginComponent {
   }
 
   login() {
-    this.loginService.login(this.username, this.password).subscribe(
+    this.router.navigate(['home']);
+    /*this.loginService.login(this.username, this.password).subscribe(
       data => {
         this.router.navigate(['home']);
       },
       error => {
         this.errorMessage = 'Invalid username or password';
       }
-    );
+    );*/
   }
 
   onRegister() {
