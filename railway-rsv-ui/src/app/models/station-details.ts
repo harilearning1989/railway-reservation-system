@@ -1,5 +1,5 @@
 export interface StationDetails {
-    phoneNumber: any;
-    saleDate: any;
-    medicineName: any;
+  stationName: any;
+  location: any;
+  platformCount: any;
 }

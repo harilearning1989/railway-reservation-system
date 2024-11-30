@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/trains")
+@CrossOrigin(origins = "*")
 public class TrainRestController {
 
     @Autowired

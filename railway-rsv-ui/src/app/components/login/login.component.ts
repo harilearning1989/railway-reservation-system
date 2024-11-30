@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginService} from '../../services/login.service';
 import {FormsModule} from '@angular/forms';
@@ -14,23 +14,25 @@ import {NgIf} from '@angular/common';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-   errorMessage: string = '';
-   username: string = '';
-   password: string = '';
+  errorMessage: string = '';
+  username: string = '';
+  password: string = '';
+
   constructor(private router: Router,
-  private loginService: LoginService) {
+              private loginService: LoginService) {
   }
 
   login() {
-    this.router.navigate(['home']);
-    /*this.loginService.login(this.username, this.password).subscribe(
+    //this.router.navigate(['home']);
+    console.log('username and password::' + this.username + '===and password::' + this.password);
+    this.loginService.login(this.username, this.password).subscribe(
       data => {
         this.router.navigate(['home']);
       },
       error => {
         this.errorMessage = 'Invalid username or password';
       }
-    );*/
+    );
   }
 
   onRegister() {
