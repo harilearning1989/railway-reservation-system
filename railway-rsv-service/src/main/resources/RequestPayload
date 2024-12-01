@@ -1,0 +1,17 @@
+Schedule Train
+
+{
+    "train": {
+        "id": 1  // Assuming you have a Train entity and you're referencing its ID
+    },
+    "departureStation": {
+        "id": 1  // Reference to the departure station (e.g., New York Penn Station)
+    },
+    "arrivalStation": {
+        "id": 2  // Reference to the arrival station (e.g., Washington Union Station)
+    },
+    "departureTime": "2024-10-23T08:00:00",  // Departure time in ISO 8601 format
+    "arrivalTime": "2024-10-23T11:30:00",     // Arrival time in ISO 8601 format
+    "availableSeats": 50,                      // Number of seats available
+    "fare": 120.00                             // Fare for the journey
+}

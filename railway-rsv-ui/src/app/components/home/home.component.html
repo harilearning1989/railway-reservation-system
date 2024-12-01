@@ -34,6 +34,16 @@
                             Train Details
                         </a>
                     </li>
+                  <li class="nav-item">
+                    <a class="nav-link style-weight" [routerLink]="['/home/schedule-train']" routerLinkActive="active">
+                      Schedule Train
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link style-weight" [routerLink]="['/home/employee-details']" routerLinkActive="active">
+                      Employee Details
+                    </a>
+                  </li>
                    <!-- <li class="nav-item" *ngIf="authService.hasRole('ROLE_ADMIN')">
                         <a class="nav-link style-weight" [routerLink]="['/home/purchaseMedicine']" routerLinkActive="active">
                             Purchase Medicine
@@ -50,8 +60,8 @@
                         </a>
                     </li>-->
                     <li class="nav-item">
-                        <a class="nav-link style-weight" [routerLink]="['/home/supplier']" routerLinkActive="active">
-                            Manage Supplier
+                        <a class="nav-link style-weight" [routerLink]="['/home/admin-details']" routerLinkActive="active">
+                            Admin Details
                         </a>
                     </li>
                     <!--<li class="nav-item" *ngIf="authService.hasAnyRole(['ROLE_EMPLOYEE', 'ROLE_ADMIN'])">

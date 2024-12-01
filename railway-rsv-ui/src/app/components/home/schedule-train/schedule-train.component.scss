@@ -1,0 +1,31 @@
+.table-wrapper {
+  max-height: 670px; /* Set the max height of the table body */
+  overflow-y: auto;
+  overflow-x: auto;
+  position: relative;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  text-align: center; /* Center text in all table cells */
+}
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #fff; /* Ensure the background color is solid to avoid transparency */
+  box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4); /* Adds a subtle shadow effect to the header */
+  font-size: 1.2rem;
+  text-align: center; /* Center header text */
+  font-style: italic;
+  color: #007bff
+}
+
+.table tbody td {
+  font-size: 1rem;
+  white-space: nowrap; /* Prevents text from wrapping */
+  text-align: center; /* Center text in all cells */
+  font-style: italic;
+}

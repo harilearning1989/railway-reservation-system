@@ -26,6 +26,18 @@ export const routes: Routes = [
         loadComponent: () => import('./components/home/train-details/train-details.component').then(c => c.TrainDetailsComponent)
       },
       {
+        path: 'schedule-train',
+        loadComponent: () => import('./components/home/schedule-train/schedule-train.component').then(c => c.ScheduleTrainComponent)
+      },
+      {
+        path: 'employee-details',
+        loadComponent: () => import('./components/home/employee-details/employee-details.component').then(c => c.EmployeeDetailsComponent)
+      },
+      {
+        path: 'admin-details',
+        loadComponent: () => import('./components/home/admin-details/admin-details.component').then(c => c.AdminDetailsComponent)
+      },
+      {
         path: 'about-us',
         loadComponent: () => import('./components/home/about-us/about-us.component').then(c => c.AboutUsComponent)
       },

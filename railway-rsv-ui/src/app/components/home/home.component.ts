@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {authInterceptor} from '../../interceptors/auth.interceptor';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,11 @@ import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 })
 export class HomeComponent {
 
+  constructor(private authService: AuthService,
+              private router: Router) {
+  }
   logout() {
-
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }
