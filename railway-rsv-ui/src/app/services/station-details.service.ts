@@ -1,23 +1,24 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {StationDetails} from '../models/station-details';
 import {environment} from '../../environment/environment';
+import {GlobalResponse} from '../models/global-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StationDetailsService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   httpLink = {
     stationDetails: environment.apiBaseUrl + 'stations/findAll'
   }
 
-  getAll(): Observable<StationDetails[]> {
-    // @ts-ignore
-    return this.http.get<StationDetails[]>(this.httpLink);
+  getAllStationDetails(): Observable<GlobalResponse<StationDetails[]>> {
+    return this.http.get<GlobalResponse<StationDetails[]>>(this.httpLink.stationDetails);
   }
 
   /*getById(id: number): Observable<any> {

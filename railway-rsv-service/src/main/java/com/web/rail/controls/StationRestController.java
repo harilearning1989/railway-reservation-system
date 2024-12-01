@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/stations")
-@CrossOrigin(origins = "*")
 public class StationRestController {
 
     private final StationService stationService;

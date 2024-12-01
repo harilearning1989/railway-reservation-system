@@ -31,10 +31,21 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
     },
   });*/
 
-  req = req.clone({
+  /*req = req.clone({
     headers: req.headers.set('Authorization', `Bearer ${token}`)
-  });
+  });*/
   // Pass the modified request to the next handler
+
+  // Clone the request and add the Authorization header
+  if (token) {
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+  // Print the headers after modification
+  console.log('Request Headers:', req.headers);
   return next(req);
 };
 

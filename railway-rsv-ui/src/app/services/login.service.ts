@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../environment/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {LoginResponse} from '../models/login-response';
 
@@ -35,4 +35,5 @@ export class LoginService {
         return response;
       }));
   }
+
 }

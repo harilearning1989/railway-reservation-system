@@ -2,7 +2,7 @@
   <div class="row mb-3">
     <div class="col">
       <!-- Search Input -->
-      <input type="text" class="form-control mb-3" [(ngModel)]="searchSaleText"
+      <input type="text" class="form-control mb-3" [(ngModel)]="searchStationText"
              placeholder="Search Medicine,Sold Name,Sale Date,Customer Name,Phone Number..."/>
     </div>
   </div>
@@ -11,26 +11,25 @@
     <table class="table table-bordered table-hover table-sm">
       <thead class="thead-light">
       <tr>
-        <th>Customer</th>
-        <th>Phone</th>
-        <th>Total Quantity</th>
-        <th>Total Price</th>
-        <th>Sold Name</th>
-        <th>Sale Date</th>
+        <th>Station Name</th>
+        <th>Location</th>
+        <th>PlatformCount</th>
+        <th>isJunction</th>
+        <th>CreatedDate</th>
+        <th>UpdatedDate</th>
         <th>Action</th>
       </tr>
       </thead>
       <tbody>
-      <!--<tr *ngFor="let sale of filteredData()">-->
-      <tr *ngFor="let sale of stationDetails">
-        <!--<td [title]="sale.description ?? ''">
-          {{ (sale.description?.length ?? 0) > 15 ? (sale.description | slice:0:15) + '...' : (sale.description ?? '') }}
-        </td>-->
-        <td>{{ sale.stationName }}</td>
-        <td>{{ sale.location }}</td>
-        <td>{{ sale.platformCount }}</td>
-        <td>
-          <button class="btn btn-primary btn-sm">Details</button>&nbsp;
+      <tr *ngFor="let train of filteredData()">
+        <!--<tr *ngFor="let train of trainDetails">-->
+        <td>{{ train.stationName }}</td>
+        <td>{{ train.location }}</td>
+        <td>{{ train.platformCount }}</td>
+        <td>{{ train.isJunction }}</td>
+        <td>{{ train.createdDate }}</td>
+        <td>{{ train.updatedDate }}</td>
+        <td style="text-align: center">
           <button class="btn btn-primary btn-sm">Update</button>&nbsp;
           <button class="btn btn-primary btn-sm">Delete</button>
         </td>

@@ -15,17 +15,37 @@ import {StationDetailsService} from '../../../services/station-details.service';
 })
 export class StationDetailsComponent implements OnInit {
 
-  searchSaleText: string = '';
-  stationDetails?: StationDetails[];
+  searchStationText: string = '';
+  stationDetails: StationDetails[] = [];
 
   constructor(private stationDetailsService: StationDetailsService) {
   }
 
   ngOnInit(): void {
-    console.log('StationDetailsService::');
-    this.stationDetailsService.getAll().subscribe((data) => {
-      this.stationDetails = data;
-      console.log('StationDetailsService getAll::', this.stationDetails);
+    this.loadAllStationDetails();
+  }
+
+  loadAllStationDetails(): void {
+    this.stationDetailsService.getAllStationDetails().subscribe(response => {
+      this.stationDetails = response.data;
+      console.log('stationDetails details::', this.stationDetails);
+    });
+  }
+
+  // Filter data based on searchText
+  filteredData() {
+    if (!this.searchStationText) {
+      return this.stationDetails;
+    }
+    return this.stationDetails.filter(stationDetail => {
+      const searchTerm = this.searchStationText.toLowerCase();
+      return (
+        stationDetail.stationName?.toLowerCase().includes(searchTerm) ||
+        stationDetail.location?.includes(searchTerm) ||
+        stationDetail.createdDate?.includes(searchTerm) ||
+        stationDetail.updatedDate?.includes(searchTerm) ||
+        stationDetail.platformCount?.toString().includes(searchTerm)
+      );
     });
   }
 

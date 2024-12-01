@@ -1,5 +1,9 @@
 export interface StationDetails {
-  stationName: any;
-  location: any;
-  platformCount: any;
+  id?: number;
+  stationName?: string;
+  location?: string;
+  platformCount?: number;
+  isJunction?: boolean;
+  createdDate?: string;
+  updatedDate?: string;
 }
