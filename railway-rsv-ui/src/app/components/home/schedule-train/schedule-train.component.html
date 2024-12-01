@@ -17,8 +17,8 @@
         <th>Destination</th>
         <th>DepartureTime</th>
         <th>ArrivalTime</th>
-        <th>Duration</th>
-        <th>TotalSeats</th>
+        <th>Dur</th>
+        <th>Seats</th>
         <th>Fare</th>
         <th>Action</th>
       </tr>
@@ -35,10 +35,36 @@
         <td>{{ train.totalSeats }}</td>
         <td>{{ train.fare }}</td>
         <td style="text-align: center">
-          <button class="btn btn-primary btn-sm">Schedule</button>
+          <button class="btn btn-primary btn-sm" (click)="scheduleTrain(train)">Schedule</button>
         </td>
       </tr>
       </tbody>
     </table>
+  </div>
+</div>
+
+<!-- Bootstrap Modal -->
+<div
+  class="modal fade"
+  id="userModal"
+  tabindex="-1"
+  aria-labelledby="userModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="userModalLabel">User Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>ID:</strong> {{ selectedUser?.id }}</p>
+        <p><strong>Name:</strong> {{ selectedUser?.name }}</p>
+        <p><strong>Role:</strong> {{ selectedUser?.role }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
   </div>
 </div>

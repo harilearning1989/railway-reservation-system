@@ -4,6 +4,7 @@ import {NgForOf} from '@angular/common';
 import {TrainDetails} from '../../../models/train-details';
 import {Router} from '@angular/router';
 import {TrainDetailsService} from '../../../services/train-details.service';
+import bootstrap from '../../../../main.server';
 
 @Component({
   selector: 'app-schedule-train',
@@ -17,6 +18,7 @@ import {TrainDetailsService} from '../../../services/train-details.service';
 export class ScheduleTrainComponent {
   trainDetails: TrainDetails[] = [];
   searchTrainText: string = '';
+  selectedTrain: TrainDetails | undefined;
 
   constructor(private router: Router,
               private trainDetailsService: TrainDetailsService) {
@@ -49,5 +51,15 @@ export class ScheduleTrainComponent {
         trainDetail.destination?.toLowerCase().includes(searchTerm)
       );
     });
+  }
+
+  scheduleTrain(train: TrainDetails) {
+    /*this.selectedTrain = train;
+    // Open the modal using Bootstrap's JavaScript API
+    const modalElement = document.getElementById('userModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }*/
   }
 }
