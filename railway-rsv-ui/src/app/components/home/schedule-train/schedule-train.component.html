@@ -36,6 +36,7 @@
         <td>{{ train.fare }}</td>
         <td style="text-align: center">
           <button class="btn btn-primary btn-sm" (click)="scheduleTrain(train)">Schedule</button>
+          <!--<button class="btn btn-primary" (click)="openEditModal(train)">Edit</button>-->
         </td>
       </tr>
       </tbody>
@@ -43,28 +44,100 @@
   </div>
 </div>
 
-<!-- Bootstrap Modal -->
-<div
+<!-- Modal HTML -->
+<div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="popupModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-xxl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="popupModalLabel">Schedule Train</h5>
+        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="scheduleTrainForm" (ngSubmit)="onSubmit()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="trainName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="trainName" formControlName="trainName" [disabled]="true">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="trainNumber" class="form-label">Train Number</label>
+              <input type="text" class="form-control" id="trainNumber" formControlName="trainNumber" [disabled]="true">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="source" class="form-label">Source</label>
+              <input type="text" class="form-control" id="source" formControlName="source" [disabled]="true">
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="destination" class="form-label">Destination</label>
+              <input type="text" class="form-control" id="destination" formControlName="destination" [disabled]="true">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="datePicker">Select Date</label>
+              <input type="datetime-local" id="datePicker" class="form-control" formControlName="dateTime"
+                [min]="minDateTime" name="dateTime"/>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<!--<div
   class="modal fade"
-  id="userModal"
+  id="editModal"
   tabindex="-1"
-  aria-labelledby="userModalLabel"
+  aria-labelledby="editModalLabel"
   aria-hidden="true"
 >
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="userModalLabel">User Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="editModalLabel">Edit User</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <p><strong>ID:</strong> {{ selectedUser?.id }}</p>
-        <p><strong>Name:</strong> {{ selectedUser?.name }}</p>
-        <p><strong>Role:</strong> {{ selectedUser?.role }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        &lt;!&ndash; Form &ndash;&gt;
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              id="name"
+              class="form-control"
+              formControlName="name"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="email"
+            />
+          </div>
+          <button type="submit" class="btn btn-success">Save</button>
+        </form>
       </div>
     </div>
   </div>
-</div>
+</div>-->
+
+

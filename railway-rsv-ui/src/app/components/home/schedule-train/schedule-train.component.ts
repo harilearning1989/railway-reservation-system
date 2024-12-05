@@ -1,31 +1,48 @@
-import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgForOf} from '@angular/common';
 import {TrainDetails} from '../../../models/train-details';
 import {Router} from '@angular/router';
 import {TrainDetailsService} from '../../../services/train-details.service';
-import bootstrap from '../../../../main.server';
+import {DateUtilsService} from '../../../utils/date-utils.service';
+
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-schedule-train',
   imports: [
     FormsModule,
-    NgForOf
+    NgForOf,
+    ReactiveFormsModule
   ],
   templateUrl: './schedule-train.component.html',
   styleUrl: './schedule-train.component.scss'
 })
-export class ScheduleTrainComponent {
+export class ScheduleTrainComponent implements OnInit {
   trainDetails: TrainDetails[] = [];
   searchTrainText: string = '';
   selectedTrain: TrainDetails | undefined;
 
+  selectedDateTime: string | null = null;
+  minDateTime: string = '';
+  //editForm!: FormGroup;
+  modalInstance: any; // Bootstrap modal instance
+  selectedUser: TrainDetails | undefined; // The user being edited
+
+  scheduleTrainForm!: FormGroup;
+
   constructor(private router: Router,
-              private trainDetailsService: TrainDetailsService) {
+              private trainDetailsService: TrainDetailsService,
+              private dateUtilsService: DateUtilsService,
+              private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
     this.loadAllTrainDetails();
+    const now = new Date();
+    this.minDateTime = this.dateUtilsService.getMinDate(now);
+
+    this.initializeForm();
   }
 
   loadAllTrainDetails(): void {
@@ -54,12 +71,48 @@ export class ScheduleTrainComponent {
   }
 
   scheduleTrain(train: TrainDetails) {
-    /*this.selectedTrain = train;
-    // Open the modal using Bootstrap's JavaScript API
-    const modalElement = document.getElementById('userModal');
+    this.initializeForm();
+    this.selectedUser = train;
+
+    // Prepopulate the form with the selected user's data
+    this.scheduleTrainForm.patchValue({
+      trainName: train.trainName,
+      trainNumber: train.trainNumber,
+      source: train.source,
+      destination: train.destination,
+      id: train.id
+    });
+
+    // Open the modal
+    const modalElement = document.getElementById('popupModal');
     if (modalElement) {
-      const modal = new bootstrap.Modal(modalElement);
-      modal.show();
-    }*/
+      this.modalInstance = new bootstrap.Modal(modalElement);
+      this.modalInstance.show();
+    }
+  }
+
+  onSubmit(): void {
+    if (this.scheduleTrainForm.valid) {
+      // Get individual fields
+      const dateTime = this.scheduleTrainForm.value.dateTime; // Get the date-time field value
+      const id = this.scheduleTrainForm.value.id;
+      console.log('Date time and id::', {dateTime, id});
+
+
+
+      this.modalInstance.hide();
+    }
+  }
+
+  private initializeForm() {
+    // Initialize the form
+    this.scheduleTrainForm = this.fb.group({
+      trainName: [{value: '', disabled: true}],
+      trainNumber: [{value: '', disabled: true}],
+      source: [{value: '', disabled: true}],
+      destination: [{value: '', disabled: true}],
+      id: '',
+      dateTime: ''
+    });
   }
 }
