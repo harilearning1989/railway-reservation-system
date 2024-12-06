@@ -1,5 +1,6 @@
 package com.web.rail.services;
 
+import com.web.rail.dtos.ScheduleNewTrainDTO;
 import com.web.rail.dtos.ScheduleTrainDto;
 import com.web.rail.models.ScheduleTrain;
 import com.web.rail.models.Station;
@@ -22,4 +23,6 @@ public interface ScheduleService {
     void cancelSchedule(Long id);
 
     void markAsTraveled(Long id);
+
+    ScheduleTrainDto scheduleTrain(ScheduleNewTrainDTO dto,String username);
 }

@@ -5,6 +5,8 @@ import {TrainDetails} from '../../../models/train-details';
 import {Router} from '@angular/router';
 import {TrainDetailsService} from '../../../services/train-details.service';
 import {DateUtilsService} from '../../../utils/date-utils.service';
+import {ScheduleTrainService} from '../../../services/schedule-train.service';
+import {ScheduleTrain} from '../../../models/schedule-train';
 
 declare var bootstrap: any;
 
@@ -21,20 +23,18 @@ declare var bootstrap: any;
 export class ScheduleTrainComponent implements OnInit {
   trainDetails: TrainDetails[] = [];
   searchTrainText: string = '';
-  selectedTrain: TrainDetails | undefined;
-
-  selectedDateTime: string | null = null;
   minDateTime: string = '';
-  //editForm!: FormGroup;
   modalInstance: any; // Bootstrap modal instance
   selectedUser: TrainDetails | undefined; // The user being edited
+  scheduleTrainData: ScheduleTrain | undefined;
 
   scheduleTrainForm!: FormGroup;
 
   constructor(private router: Router,
               private trainDetailsService: TrainDetailsService,
               private dateUtilsService: DateUtilsService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private scheduleTrainService: ScheduleTrainService) {
   }
 
   ngOnInit(): void {
@@ -98,7 +98,13 @@ export class ScheduleTrainComponent implements OnInit {
       const id = this.scheduleTrainForm.value.id;
       console.log('Date time and id::', {dateTime, id});
 
-
+      this.scheduleTrainService.scheduleTrain(id, dateTime).subscribe({
+        next: (response) => {
+          console.log('Success:', response);
+          this.scheduleTrainData = response.data;
+        },
+        error: (error) => console.error('Error:', error),
+      });
 
       this.modalInstance.hide();
     }

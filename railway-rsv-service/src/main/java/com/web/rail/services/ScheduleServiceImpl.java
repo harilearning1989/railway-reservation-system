@@ -1,5 +1,6 @@
 package com.web.rail.services;
 
+import com.web.rail.dtos.ScheduleNewTrainDTO;
 import com.web.rail.dtos.ScheduleTrainDto;
 import com.web.rail.enums.TrainStatus;
 import com.web.rail.exceptions.ResourceNotFoundException;
@@ -92,5 +93,10 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         schedule.setStatus(TrainStatus.TRAVELED); // Update status to TRAVELED
         scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public ScheduleTrainDto scheduleTrain(ScheduleNewTrainDTO dto,String username) {
+        return null;
     }
 }

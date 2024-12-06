@@ -1,6 +1,7 @@
 package com.web.rail.controls;
 
 import com.web.rail.constants.CommonConstants;
+import com.web.rail.dtos.ScheduleNewTrainDTO;
 import com.web.rail.dtos.ScheduleTrainDto;
 import com.web.rail.models.ScheduleTrain;
 import com.web.rail.models.Station;
@@ -8,6 +9,7 @@ import com.web.rail.response.GlobalResponse;
 import com.web.rail.response.ResponseHandler;
 import com.web.rail.services.ScheduleService;
 import com.web.rail.services.StationService;
+import com.web.rail.utils.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,19 @@ public class ScheduleRestController {
 
     @Autowired
     private StationService stationService;
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @PostMapping("train")
+    public GlobalResponse scheduleTrain(@RequestBody ScheduleNewTrainDTO dto,
+                                        @RequestHeader("Authorization") String tokenHeader) {
+        String username = jwtTokenProvider.getUsernameFromToken(tokenHeader);
+        ScheduleTrainDto scheduleTrainDto = scheduleService.scheduleTrain(dto,username);
+
+        return ResponseHandler.generateResponse(
+                String.format(CommonConstants.TRAIN_SCHEDULE_SUCCESS,
+                        null), HttpStatus.BAD_REQUEST, scheduleTrainDto);
+    }
 
     @GetMapping("list")
     public GlobalResponse getAllSchedules() {
