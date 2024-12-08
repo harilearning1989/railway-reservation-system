@@ -1,1 +1,42 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+  <div class="row mb-3">
+    <div class="col">
+      <!-- Search Input -->
+      <input type="text" class="form-control mb-3" [(ngModel)]="searchStationText"
+             placeholder="Search Medicine,Sold Name,Sale Date,Customer Name,Phone Number..."/>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table table-bordered table-hover table-sm">
+      <thead class="thead-light">
+      <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Source</th>
+        <th>Destination</th>
+        <th>Duration</th>
+        <th>Seats</th>
+        <th>Fare</th>
+        <th>Halts</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let train of filteredData()">
+        <td>{{ train.trainNumber }}</td>
+        <td>{{ train.trainName }}</td>
+        <td>{{ train.source }}</td>
+        <td>{{ train.destination }}</td>
+        <td>{{ train.duration }}</td>
+        <td>{{ train.totalSeats }}</td>
+        <td>{{ train.fare }}</td>
+        <td>{{ train.halts }}</td>
+        <td style="text-align: center">
+          <button class="btn btn-primary btn-sm">Book</button>&nbsp;
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

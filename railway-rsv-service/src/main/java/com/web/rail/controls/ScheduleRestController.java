@@ -9,7 +9,6 @@ import com.web.rail.response.GlobalResponse;
 import com.web.rail.response.ResponseHandler;
 import com.web.rail.services.ScheduleService;
 import com.web.rail.services.StationService;
-import com.web.rail.utils.JwtTokenProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleRestController {
@@ -30,18 +30,22 @@ public class ScheduleRestController {
 
     @Autowired
     private StationService stationService;
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
 
-    @PostMapping("train")
-    public GlobalResponse scheduleTrain(@RequestBody ScheduleNewTrainDTO dto,
-                                        @RequestHeader("Authorization") String tokenHeader) {
-        String username = jwtTokenProvider.getUsernameFromToken(tokenHeader);
-        ScheduleTrainDto scheduleTrainDto = scheduleService.scheduleTrain(dto,username);
+    @PostMapping("schedule")
+    public GlobalResponse scheduleTrain(@RequestBody ScheduleNewTrainDTO dto) {
+        String username = "admin";
+        ScheduleTrainDto scheduleTrainDto = scheduleService.scheduleTrain(dto, username);
 
         return ResponseHandler.generateResponse(
                 String.format(CommonConstants.TRAIN_SCHEDULE_SUCCESS,
-                        null), HttpStatus.BAD_REQUEST, scheduleTrainDto);
+                        scheduleTrainDto.trainName()), HttpStatus.BAD_REQUEST, scheduleTrainDto);
+    }
+
+    @GetMapping("scheduled")
+    public GlobalResponse getAllScheduledTrains() {
+        List<ScheduleTrainDto> scheduleTrainDtoList = scheduleService.getAllScheduledTrains();
+        return ResponseHandler.generateResponse(String.format(CommonConstants.SUCCESSFULLY_FETCHED, "Schedule Train"),
+                HttpStatus.OK, scheduleTrainDtoList);
     }
 
     @GetMapping("list")

@@ -1,5 +1,5 @@
 package com.web.rail.dtos;
 
-public record ScheduleNewTrainDTO(int id,
+public record ScheduleNewTrainDTO(Long id,
                                   String dateTime) {
 }

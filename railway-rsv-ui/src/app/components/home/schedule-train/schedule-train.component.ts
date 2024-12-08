@@ -26,7 +26,7 @@ export class ScheduleTrainComponent implements OnInit {
   minDateTime: string = '';
   modalInstance: any; // Bootstrap modal instance
   selectedUser: TrainDetails | undefined; // The user being edited
-  scheduleTrainData: ScheduleTrain | undefined;
+  scheduleTrainData: ScheduleTrain[] = [];
 
   scheduleTrainForm!: FormGroup;
 

@@ -11,7 +11,8 @@ import {HttpClient} from '@angular/common/http';
 export class ScheduleTrainService {
 
   httpLink = {
-    scheduleTrain: environment.apiBaseUrl + 'schedule/train',
+    scheduleTrain: environment.apiBaseUrl + 'schedules/schedule',
+    scheduledTrains: environment.apiBaseUrl + 'schedules/scheduled',
   }
 
   constructor(private http: HttpClient) {
@@ -20,5 +21,9 @@ export class ScheduleTrainService {
   scheduleTrain(id: any, dateTime: any): Observable<GlobalResponse<ScheduleTrain[]>> {
     const payload = {id, dateTime}; // Prepare the payload
     return this.http.post<GlobalResponse<ScheduleTrain[]>>(this.httpLink.scheduleTrain, payload);
+  }
+
+  scheduledTrains(): Observable<GlobalResponse<ScheduleTrain[]>> {
+    return this.http.get<GlobalResponse<ScheduleTrain[]>>(this.httpLink.scheduledTrains);
   }
 }

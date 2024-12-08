@@ -25,4 +25,6 @@ public interface ScheduleService {
     void markAsTraveled(Long id);
 
     ScheduleTrainDto scheduleTrain(ScheduleNewTrainDTO dto,String username);
+
+    List<ScheduleTrainDto> getAllScheduledTrains();
 }

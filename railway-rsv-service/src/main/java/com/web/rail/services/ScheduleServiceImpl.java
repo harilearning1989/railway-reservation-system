@@ -4,10 +4,12 @@ import com.web.rail.dtos.ScheduleNewTrainDTO;
 import com.web.rail.dtos.ScheduleTrainDto;
 import com.web.rail.enums.TrainStatus;
 import com.web.rail.exceptions.ResourceNotFoundException;
+import com.web.rail.models.ScheduleNewTrain;
 import com.web.rail.models.ScheduleTrain;
 import com.web.rail.models.Station;
 import com.web.rail.models.TrainDetails;
 import com.web.rail.repos.ScheduleRepository;
+import com.web.rail.repos.ScheduleTrainRepo;
 import com.web.rail.repos.TrainRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,33 @@ public class ScheduleServiceImpl implements ScheduleService {
     private ScheduleRepository scheduleRepository;
     @Autowired
     private TrainRepository trainRepository;
+    @Autowired
+    private ScheduleTrainRepo scheduleTrainRepo;
+
+    @Override
+    public ScheduleTrainDto scheduleTrain(ScheduleNewTrainDTO dto, String username) {
+        ScheduleNewTrain.ScheduleNewTrainBuilder builder = ScheduleNewTrain.builder();
+        builder.scheduleBy(username);
+        builder.status(TrainStatus.SCHEDULED);
+
+        TrainDetails trainDetails = trainRepository.findById(dto.id())
+                .orElseThrow(() -> new RuntimeException("Train not found"));
+        builder.trainDetails(trainDetails);
+
+        ScheduleNewTrain scheduleNewTrain = builder.build();
+
+        scheduleNewTrain = scheduleTrainRepo.save(scheduleNewTrain);
+
+        return ScheduleTrainDto.scheduleTrain(scheduleNewTrain);
+    }
+
+    @Override
+    public List<ScheduleTrainDto> getAllScheduledTrains() {
+        List<ScheduleNewTrain> schedules = scheduleTrainRepo.findAll();
+        return schedules.stream()
+                .map(ScheduleTrainDto::scheduleTrain)
+                .toList();
+    }
 
     @Override
     public List<ScheduleTrainDto> getAllSchedules() {
@@ -95,8 +124,4 @@ public class ScheduleServiceImpl implements ScheduleService {
         scheduleRepository.save(schedule);
     }
 
-    @Override
-    public ScheduleTrainDto scheduleTrain(ScheduleNewTrainDTO dto,String username) {
-        return null;
-    }
 }

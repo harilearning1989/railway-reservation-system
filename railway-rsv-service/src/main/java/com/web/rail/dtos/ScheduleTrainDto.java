@@ -1,10 +1,13 @@
 package com.web.rail.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.rail.enums.TrainType;
+import com.web.rail.models.ScheduleNewTrain;
 import com.web.rail.models.ScheduleTrain;
 
 import java.time.LocalDateTime;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record ScheduleTrainDto(Long id,
                                String trainNumber,
                                String trainName,
@@ -31,7 +34,27 @@ public record ScheduleTrainDto(Long id,
                 schedule.getArrivalTime(),
                 schedule.getAvailableSeats(),
                 schedule.getTrainDetails().getHalts(),
-                schedule.getFare(),
+                schedule.getTrainDetails().getFare(),
+                schedule.getTrainDetails().getSource(),
+                schedule.getTrainDetails().getDestination(),
+                schedule.getTrainDetails().getTrainType(),
+                schedule.getTrainDetails().getTotalSeats(),
+                schedule.getStatus().name()
+        );
+    }
+
+    public static ScheduleTrainDto scheduleTrain(ScheduleNewTrain schedule) {
+        return new ScheduleTrainDto(
+                schedule.getId(),
+                schedule.getTrainDetails().getTrainNumber(),
+                schedule.getTrainDetails().getTrainName(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                schedule.getTrainDetails().getHalts(),
+                0,
                 schedule.getTrainDetails().getSource(),
                 schedule.getTrainDetails().getDestination(),
                 schedule.getTrainDetails().getTrainType(),

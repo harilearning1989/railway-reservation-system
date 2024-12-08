@@ -24,7 +24,6 @@ export class LoginComponent {
 
   login() {
     this.router.navigate(['home']);
-    //this.router.navigate(['home']);
     /*console.log('username and password::' + this.username + '===and password::' + this.password);
     this.loginService.login(this.username, this.password).subscribe(
       data => {
