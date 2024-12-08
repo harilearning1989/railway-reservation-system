@@ -23,6 +23,13 @@
   color: #007bff
 }
 
+th {
+  cursor: pointer;
+}
+th:hover {
+  text-decoration: underline;
+}
+
 .table tbody td {
   font-size: 1rem;
   white-space: nowrap; /* Prevents text from wrapping */

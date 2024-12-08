@@ -33,6 +33,9 @@ public class ScheduleNewTrain {
     @Column(name = "SCHEDULED_BY", nullable = false)
     private String scheduleBy;
 
+    @Column(name = "SCHEDULE_AT", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private LocalDateTime scheduleAt;
+
     @Column(name = "CREATED_AT", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdDate;
     @Column(name = "UPDATED_AT", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")

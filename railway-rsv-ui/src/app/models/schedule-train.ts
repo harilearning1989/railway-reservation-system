@@ -1,5 +1,6 @@
 
 export interface ScheduleTrain {
+  id?: number;
   trainNumber?: string;
   trainName?: string;
   source?: string;
@@ -9,4 +10,5 @@ export interface ScheduleTrain {
   totalSeats?: string;
   fare?: string;
   halts?: string;
+  scheduleAt?: string;
 }

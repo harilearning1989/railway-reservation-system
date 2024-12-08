@@ -11,6 +11,7 @@ import com.web.rail.models.TrainDetails;
 import com.web.rail.repos.ScheduleRepository;
 import com.web.rail.repos.ScheduleTrainRepo;
 import com.web.rail.repos.TrainRepository;
+import com.web.rail.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         ScheduleNewTrain.ScheduleNewTrainBuilder builder = ScheduleNewTrain.builder();
         builder.scheduleBy(username);
         builder.status(TrainStatus.SCHEDULED);
+        builder.scheduleAt(CommonUtils.getLocalDateTime(dto.dateTime()));
 
         TrainDetails trainDetails = trainRepository.findById(dto.id())
                 .orElseThrow(() -> new RuntimeException("Train not found"));

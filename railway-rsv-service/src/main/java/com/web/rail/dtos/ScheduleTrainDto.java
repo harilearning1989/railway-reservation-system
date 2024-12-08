@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.web.rail.enums.TrainType;
 import com.web.rail.models.ScheduleNewTrain;
 import com.web.rail.models.ScheduleTrain;
+import com.web.rail.utils.CommonUtils;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +23,9 @@ public record ScheduleTrainDto(Long id,
                                String destination,
                                TrainType trainType,
                                int totalSeats,
-                               String status) {
+                               String status,
+                               String duration,
+                               String scheduleAt) {
     public static ScheduleTrainDto from(ScheduleTrain schedule) {
         return new ScheduleTrainDto(
                 schedule.getId(),
@@ -39,8 +42,9 @@ public record ScheduleTrainDto(Long id,
                 schedule.getTrainDetails().getDestination(),
                 schedule.getTrainDetails().getTrainType(),
                 schedule.getTrainDetails().getTotalSeats(),
-                schedule.getStatus().name()
-        );
+                schedule.getStatus().name(),
+                schedule.getTrainDetails().getDuration(),
+                null);
     }
 
     public static ScheduleTrainDto scheduleTrain(ScheduleNewTrain schedule) {
@@ -54,12 +58,14 @@ public record ScheduleTrainDto(Long id,
                 null,
                 null,
                 schedule.getTrainDetails().getHalts(),
-                0,
+                schedule.getTrainDetails().getFare(),
                 schedule.getTrainDetails().getSource(),
                 schedule.getTrainDetails().getDestination(),
                 schedule.getTrainDetails().getTrainType(),
                 schedule.getTrainDetails().getTotalSeats(),
-                schedule.getStatus().name()
+                schedule.getStatus().name(),
+                schedule.getTrainDetails().getDuration(),
+                CommonUtils.convertDateTimeToString(schedule.getScheduleAt())
         );
     }
 }
