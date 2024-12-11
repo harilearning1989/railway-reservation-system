@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {NgForOf} from "@angular/common";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {NgForOf, NgIf} from "@angular/common";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ScheduleTrainService} from '../../../services/schedule-train.service';
 import {ScheduleTrain} from '../../../models/schedule-train';
 
@@ -11,7 +11,8 @@ declare var bootstrap: any;
   imports: [
     NgForOf,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgIf
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit {
   scheduleTrainForm!: FormGroup;
   modalInstance: any; // Bootstrap modal instance
   selectedUser: ScheduleTrain | undefined; // The user being edited
+  passengerForm!: FormGroup;
 
   constructor(private scheduleTrainService: ScheduleTrainService,
               private fb: FormBuilder) {
@@ -32,6 +34,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.scheduledTrains();
+    this.passengerFormFields();
   }
 
   scheduledTrains(): void {
@@ -126,6 +129,29 @@ export class DashboardComponent implements OnInit {
     this.modalInstance.hide();
     if (this.scheduleTrainForm.valid) {
       this.modalInstance.hide();
+    }
+  }
+
+
+  submitPassengerDetails(): void {
+    if (this.passengerForm.valid) {
+      const passengerDetails = this.passengerForm.value;
+      console.log('Passenger Details:', passengerDetails);
+      // Emit or pass data to parent component or service
+    }
+  }
+
+  private passengerFormFields() {
+    this.passengerForm = this.fb.group({
+      name: ['', Validators.required],
+      age: ['', [Validators.required, Validators.min(1)]],
+      gender: ['', Validators.required],
+    });
+  }
+
+  preventInvalidKey(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e') {
+      event.preventDefault();
     }
   }
 

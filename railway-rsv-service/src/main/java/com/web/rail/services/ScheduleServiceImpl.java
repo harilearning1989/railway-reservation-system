@@ -49,7 +49,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public List<ScheduleTrainDto> getAllScheduledTrains() {
-        List<ScheduleNewTrain> schedules = scheduleTrainRepo.findAll();
+        //List<ScheduleNewTrain> schedules = scheduleTrainRepo.findAll();
+        List<ScheduleNewTrain> schedules = scheduleTrainRepo.findAllByScheduleAtAfter(LocalDateTime.now());
         return schedules.stream()
                 .map(ScheduleTrainDto::scheduleTrain)
                 .toList();
