@@ -36,3 +36,14 @@ th:hover {
   text-align: center; /* Center text in all cells */
   font-style: italic;
 }
+
+.table-container {
+  max-height: 450px; /* Set the desired height for the table container */
+  overflow-y: auto;  /* Enable vertical scrolling */
+  border: 1px solid #ddd; /* Optional: Add a border for clarity */
+}
+
+.table {
+  margin: 0; /* Remove extra margins for proper alignment */
+}
+

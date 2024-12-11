@@ -15,4 +15,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
   }
+  getUsername(): string | null{
+    return localStorage.getItem('username');
+  }
 }

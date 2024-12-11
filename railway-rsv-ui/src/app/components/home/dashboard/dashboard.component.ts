@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {ScheduleTrainService} from '../../../services/schedule-train.service';
 import {ScheduleTrain} from '../../../models/schedule-train';
-
-declare var bootstrap: any;
+import {BookService} from '../../../services/book.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,18 +22,20 @@ export class DashboardComponent implements OnInit {
   scheduleTrains: ScheduleTrain[] = [];
   currentSortField: string = '';
   isAscending: boolean = true;
-  scheduleTrainForm!: FormGroup;
-  modalInstance: any; // Bootstrap modal instance
-  selectedUser: ScheduleTrain | undefined; // The user being edited
-  passengerForm!: FormGroup;
+  bookTicketForm: FormGroup;
+  trainId: number | undefined;
 
   constructor(private scheduleTrainService: ScheduleTrainService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private bookService: BookService) {
+    this.bookTicketForm = this.fb.group({
+      numberOfSeats: [1, [Validators.required, Validators.min(1)]],
+      passengers: this.fb.array([this.createPassenger()])
+    });
   }
 
   ngOnInit(): void {
     this.scheduledTrains();
-    this.passengerFormFields();
   }
 
   scheduledTrains(): void {
@@ -93,66 +94,71 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  scheduleTrain(train: ScheduleTrain) {
-    this.initializeForm();
-    this.selectedUser = train;
-
-    // Prepopulate the form with the selected user's data
-    this.scheduleTrainForm.patchValue({
-      trainName: train.trainName,
-      trainNumber: train.trainNumber,
-      source: train.source,
-      destination: train.destination,
-      id: train.id
-    });
-
-    // Open the modal
-    const modalElement = document.getElementById('popupModal');
-    if (modalElement) {
-      this.modalInstance = new bootstrap.Modal(modalElement);
-      this.modalInstance.show();
-    }
+  get passengers(): FormArray {
+    return this.bookTicketForm.get('passengers') as FormArray;
   }
 
-  private initializeForm() {
-    // Initialize the form
-    this.scheduleTrainForm = this.fb.group({
-      trainName: [{value: '', disabled: true}],
-      trainNumber: [{value: '', disabled: true}],
-      source: [{value: '', disabled: true}],
-      destination: [{value: '', disabled: true}],
-      id: ''
+  createPassenger(): FormGroup {
+    return this.fb.group({
+      name: ['', [Validators.required]],
+      age: ['', [Validators.required, Validators.min(1)]],
+      gender: ['', [Validators.required]]
     });
+  }
+
+  addPassenger(): void {
+    this.passengers.push(this.createPassenger());
+  }
+
+  removePassenger(index: number): void {
+    this.passengers.removeAt(index);
+    // Update the number of seats in the form
+    const currentSize = this.passengers.length;
+    this.bookTicketForm.get('numberOfSeats')?.setValue(currentSize);
+  }
+
+  onSeatsChange(): void {
+    const seatCount = this.bookTicketForm.value.numberOfSeats;
+    while (this.passengers.length < seatCount) {
+      this.addPassenger();
+    }
+    while (this.passengers.length > seatCount) {
+      this.removePassenger(this.passengers.length - 1);
+    }
   }
 
   onSubmit(): void {
-    this.modalInstance.hide();
-    if (this.scheduleTrainForm.valid) {
-      this.modalInstance.hide();
+    if (this.bookTicketForm.valid) {
+      //console.log('Booking Details:', this.bookTicketForm.value);
+      const formData = this.bookTicketForm.value;
+
+      this.bookService.bookTicket(formData,this.trainId).subscribe({
+        next: (response) => {
+          console.log('Booking successful:', response);
+          alert('Booking successful!');
+        },
+        error: (error) => {
+          console.error('Error during booking:', error);
+          alert('An error occurred while booking. Please try again.');
+        }
+      });
+    } else {
+      console.error('Form is invalid');
     }
-  }
-
-
-  submitPassengerDetails(): void {
-    if (this.passengerForm.valid) {
-      const passengerDetails = this.passengerForm.value;
-      console.log('Passenger Details:', passengerDetails);
-      // Emit or pass data to parent component or service
-    }
-  }
-
-  private passengerFormFields() {
-    this.passengerForm = this.fb.group({
-      name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(1)]],
-      gender: ['', Validators.required],
-    });
   }
 
   preventInvalidKey(event: KeyboardEvent): void {
     if (event.key === '-' || event.key === 'e') {
       event.preventDefault();
     }
+  }
+
+  // Reset the form to its default state
+  resetForm(train: ScheduleTrain): void {
+    this.trainId = train.id;
+    this.bookTicketForm.reset(); // Clear all form fields
+    this.bookTicketForm.setControl('passengers', this.fb.array([this.createPassenger()])); // Reinitialize with one passenger
+    this.bookTicketForm.get('numberOfSeats')?.setValue(1); // Set default seat value
   }
 
 }

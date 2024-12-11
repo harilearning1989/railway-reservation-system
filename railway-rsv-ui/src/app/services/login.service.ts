@@ -26,6 +26,7 @@ export class LoginService {
       .pipe(map(response => {
         if (response && response.token) {
           localStorage.setItem('currentUser', JSON.stringify({username, token: response.token}));
+          localStorage.setItem('username', username);
           localStorage.setItem('token', response.token);
           const payload = JSON.parse(atob(response.token.split('.')[1]));
           this.username = payload.username;

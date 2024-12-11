@@ -35,7 +35,12 @@
         <td>{{ train.fare }}</td>
         <td>{{ train.halts }}</td>
         <td style="text-align: center">
-          <button class="btn btn-primary btn-sm" (click)="scheduleTrain(train)">Book</button>
+          <!--<button class="btn btn-primary btn-sm" (click)="scheduleTrain(train)">Book</button>-->
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                  (click)="resetForm(train)"
+                  data-bs-target="#bookTicketModal">
+            Book
+          </button>
         </td>
       </tr>
       </tbody>
@@ -43,54 +48,87 @@
   </div>
 </div>
 
-<div class="modal fade" id="popupModal" tabindex="-1" aria-labelledby="popupModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-xxl">
+<div class="modal" tabindex="-1" role="dialog" id="bookTicketModal">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="passengerDetailModalLabel">Enter Passenger Details</h5>
-        <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">Book Ticket</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="passengerForm" (ngSubmit)="submitPassengerDetails()">
-          <div class="modal-body">
-            <div class="mb-3">
-              <label for="name" class="form-label">Name</label>
-              <input type="text" id="name" class="form-control" formControlName="name"/>
-              <div *ngIf="passengerForm.get('name')?.invalid && passengerForm.get('name')?.touched" class="text-danger">
-                Name is required.
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="age" class="form-label">Age</label>
-              <input type="number" id="age" class="form-control" min="1" formControlName="age"
-                     (keydown)="preventInvalidKey($event)"/>
-              <div *ngIf="passengerForm.get('age')?.invalid && passengerForm.get('age')?.touched" class="text-danger">
-                Age must be a positive number.
-              </div>
-            </div>
-            <div class="mb-3">
-              <label for="gender" class="form-label">Gender</label>
-              <select id="gender" class="form-select" formControlName="gender">
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
+        <form [formGroup]="bookTicketForm">
+          <div class="mb-3">
+            <label for="seats" class="form-label">Number of Seats</label>
+            <input
+              type="number"
+              id="seats"
+              formControlName="numberOfSeats"
+              class="form-control"
+              (input)="onSeatsChange()"/>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary" [disabled]="passengerForm.invalid">Submit</button>
+
+          <div class="table-container">
+            <table class="table table-bordered mt-3">
+              <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody formArrayName="passengers">
+              <tr *ngFor="let passenger of passengers.controls; let i = index" [formGroupName]="i">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    placeholder="Enter name"/>
+                </td>
+                <td>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="age"
+                    min="1"
+                    (keydown)="preventInvalidKey($event)"
+                    placeholder="Enter age"/>
+                </td>
+                <td>
+                  <select class="form-select" formControlName="gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    (click)="removePassenger(i)"
+                    *ngIf="passengers.length > 1">
+                    Remove
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
         </form>
-
       </div>
-      <!--<div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>-->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
+
+
 
 
 

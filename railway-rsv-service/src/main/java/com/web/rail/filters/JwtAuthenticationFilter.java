@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             LOGGER.info("info headers::{}: {}", headerName, headerValue);
         }
         String authHeader = request.getHeader("Authorization");
-        authHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfUEFTU0VOR0VSIiwiUk9MRV9BRE1JTiIsIlJPTEVfRU1QTE9ZRUUiXSwiaWF0IjoxNzMzNDc2OTMwLCJpc3MiOiJoYXJpLmxlYXJuaW5nMTk4OSIsImV4cCI6MTczMzgzNjkzMH0.-vwv1xpKZirsCVLPPkYyQHm7L7KdM4XlYybl4ulGGYE";
+        authHeader = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjpbIlJPTEVfUEFTU0VOR0VSIiwiUk9MRV9BRE1JTiIsIlJPTEVfRU1QTE9ZRUUiXSwiaWF0IjoxNzMzOTEwNzE2LCJpc3MiOiJoYXJpLmxlYXJuaW5nMTk4OSIsImV4cCI6MTczNDI3MDcxNn0.4qvNOcF-o5YNZuHOkOFR0xDuaeAtEUii8YyDAp1aApg";
         /*if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             writeJsonErrorResponse(request, response, HttpStatus.UNAUTHORIZED, "Missing or invalid Authorization header");
             return;
