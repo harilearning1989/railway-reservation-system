@@ -11,7 +11,7 @@ import {AuthService} from './auth.service';
 export class BookService {
 
   httpLink = {
-    bookTicket: environment.apiBaseUrl + 'book/ticket',
+    bookTicket: environment.apiBaseUrl + 'ticket/book',
   }
 
   constructor(private http: HttpClient,

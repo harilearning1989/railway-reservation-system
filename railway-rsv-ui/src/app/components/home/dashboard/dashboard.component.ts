@@ -5,6 +5,8 @@ import {ScheduleTrainService} from '../../../services/schedule-train.service';
 import {ScheduleTrain} from '../../../models/schedule-train';
 import {BookService} from '../../../services/book.service';
 
+declare var bootstrap: any;
+
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -136,6 +138,11 @@ export class DashboardComponent implements OnInit {
         next: (response) => {
           console.log('Booking successful:', response);
           alert('Booking successful!');
+
+          // Close the modal programmatically
+          const modalElement = document.getElementById('bookTicketModal');
+          const modal = bootstrap.Modal.getInstance(modalElement!);
+          modal?.hide();
         },
         error: (error) => {
           console.error('Error during booking:', error);

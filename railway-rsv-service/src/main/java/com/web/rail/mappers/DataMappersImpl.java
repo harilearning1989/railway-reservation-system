@@ -146,4 +146,27 @@ public class DataMappersImpl implements DataMappers {
                         .toList()
         );
     }
+
+    @Override
+    public BookTicket recordToEntity(BookTicketDto dto) {
+        BookTicket.BookTicketBuilder builder = BookTicket.builder();
+        builder.numberOfSeats(dto.numberOfSeats());
+
+        return builder.build();
+    }
+
+    @Override
+    public List<TravelledPassenger> toEntityList(List<PassengerDto> passengers, BookTicket bookTicket) {
+        return Optional.ofNullable(passengers)
+                .orElseGet(Collections::emptyList)
+                .stream()
+                .map(m -> {
+                    TravelledPassenger.TravelledPassengerBuilder builder = TravelledPassenger.builder();
+                    builder.name(m.name());
+                    builder.age(m.age());
+                    builder.userGender(m.gender());
+                    builder.bookTicket(bookTicket);
+                    return builder.build();
+                }).toList();
+    }
 }

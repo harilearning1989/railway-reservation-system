@@ -23,4 +23,8 @@ public interface DataMappers {
     Employee toEmployee(EmployeeRequestDto dto, Users users);
 
     EmployeeResponseDTO toDto(Users users, Employee employee);
+
+    BookTicket recordToEntity(BookTicketDto dto);
+
+    List<TravelledPassenger> toEntityList(List<PassengerDto> passengers, BookTicket bookTicket);
 }

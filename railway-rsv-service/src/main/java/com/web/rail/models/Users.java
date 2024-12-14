@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -32,5 +33,8 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<BookTicket> bookTicket;
 
 }
