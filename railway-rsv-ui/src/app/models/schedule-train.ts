@@ -7,7 +7,7 @@ export interface ScheduleTrain {
   destination?: string;
   duration?: string;
   trainType?: string;
-  totalSeats?: string;
+  totalSeats?: number;
   fare?: string;
   halts?: string;
   scheduleAt?: string;

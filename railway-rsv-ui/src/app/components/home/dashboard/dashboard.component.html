@@ -1,7 +1,6 @@
 <div class="container-fluid">
   <div class="row mb-3">
     <div class="col">
-      <!-- Search Input -->
       <input type="text" class="form-control mb-3" [(ngModel)]="searchStationText"
              placeholder="Search Medicine,Sold Name,Sale Date,Customer Name,Phone Number..."/>
     </div>
@@ -26,7 +25,8 @@
       <tbody>
       <tr *ngFor="let train of filteredData()">
         <td>{{ train.trainNumber }}</td>
-        <td>{{ train.trainName }}</td>
+        <td><a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal"
+               (click)="onOpenDialog(train)">{{ train.trainName }}</a></td>
         <td>{{ train.source }}</td>
         <td>{{ train.destination }}</td>
         <td>{{ train.scheduleAt }}</td>
@@ -123,6 +123,88 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap Modal -->
+<div
+  class="modal fade"
+  id="bookedTicketModel"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Booked Tickets</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-3">Total Tickets::{{ totalTickets }}</div>
+          <div class="col-3">Booked Tickets</div>
+          <div class="col-3">Available Tickets</div>
+        </div>
+        <div class="table-wrapper">
+          <table class="table table-bordered table-hover table-sm">
+            <thead class="thead-light">
+            <tr>
+              <th>Train Number</th>
+              <th>Train Name</th>
+              <th>Total Seats</th>
+              <th>Fare</th>
+              <th>Booked By</th>
+            </tr>
+            </thead>
+            <tbody>
+            <ng-container *ngFor="let book of bookings; let i = index">
+              <tr (click)="toggleExpand(i)">
+                <td>{{ book.trainId }}</td>
+                <td>{{ book.trainId }}</td>
+                <td>{{ book.numberOfSeats }}</td>
+                <td>{{ book.numberOfSeats }}</td>
+                <td>{{ book.username }}</td>
+              </tr>
+              <tr *ngIf="expandedIndex === i">
+                <td colspan="5">
+                  <!-- Sublist Table -->
+                  <table class="table table-sm table-striped child-table">
+                    <thead>
+                    <tr>
+                      <th>Child Name</th>
+                      <th>Age</th>
+                      <th>Gender</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let child of book.passengers">
+                      <td>{{ child.name }}</td>
+                      <td>{{ child.age }}</td>
+                      <td>{{ child.gender }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+        <!--<button type="button" class="btn btn-primary">Save changes</button>-->
       </div>
     </div>
   </div>

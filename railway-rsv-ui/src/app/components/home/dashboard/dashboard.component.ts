@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Val
 import {ScheduleTrainService} from '../../../services/schedule-train.service';
 import {ScheduleTrain} from '../../../models/schedule-train';
 import {BookService} from '../../../services/book.service';
+import {Booking} from '../../../models/booking';
 
 declare var bootstrap: any;
 
@@ -26,6 +27,13 @@ export class DashboardComponent implements OnInit {
   isAscending: boolean = true;
   bookTicketForm: FormGroup;
   trainId: number | undefined;
+  modalInstance: any; // Bootstrap modal instance
+  bookings: Booking[] = [];
+  expandedIndex: number | null = 0;
+  totalTickets: number | undefined = 0;
+  bookedTickets: number = 0;
+  availableTickets: number = 0;
+
 
   constructor(private scheduleTrainService: ScheduleTrainService,
               private fb: FormBuilder,
@@ -134,7 +142,7 @@ export class DashboardComponent implements OnInit {
       //console.log('Booking Details:', this.bookTicketForm.value);
       const formData = this.bookTicketForm.value;
 
-      this.bookService.bookTicket(formData,this.trainId).subscribe({
+      this.bookService.bookTicket(formData, this.trainId).subscribe({
         next: (response) => {
           console.log('Booking successful:', response);
           alert('Booking successful!');
@@ -168,4 +176,26 @@ export class DashboardComponent implements OnInit {
     this.bookTicketForm.get('numberOfSeats')?.setValue(1); // Set default seat value
   }
 
+
+  onOpenDialog(train: ScheduleTrain): void {
+    console.log('Dialog opened::', train.id);
+    this.totalTickets = train.totalSeats;
+    this.bookService.findAllBookedTickets(train.id).subscribe({
+      next: (response) => {
+        console.log('Success:', response);
+        this.bookings = response.data;
+
+        const modalElement = document.getElementById('bookedTicketModel');
+        if (modalElement) {
+          this.modalInstance = new bootstrap.Modal(modalElement);
+          this.modalInstance.show();
+        }
+      },
+      error: (error) => console.error('Error:', error),
+    });
+  }
+
+  toggleExpand(index: number): void {
+    this.expandedIndex = this.expandedIndex === index ? null : index;
+  }
 }

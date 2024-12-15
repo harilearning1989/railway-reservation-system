@@ -1,5 +1,5 @@
 .table-wrapper {
-  max-height: 580px; /* Set the max height of the table body */
+  max-height: 670px; /* Set the max height of the table body */
   overflow-y: auto;
   overflow-x: auto;
   position: relative;
@@ -26,6 +26,7 @@
 th {
   cursor: pointer;
 }
+
 th:hover {
   text-decoration: underline;
 }
@@ -39,11 +40,24 @@ th:hover {
 
 .table-container {
   max-height: 450px; /* Set the desired height for the table container */
-  overflow-y: auto;  /* Enable vertical scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
   border: 1px solid #ddd; /* Optional: Add a border for clarity */
 }
 
 .table {
   margin: 0; /* Remove extra margins for proper alignment */
+}
+
+tr {
+  cursor: pointer;
+}
+
+tr:hover {
+  background-color: #f8f9fa;
+}
+
+/* Custom styles for the child table */
+.child-table {
+  border: 2px solid #f30606; /* Border thickness and color */
 }
 
