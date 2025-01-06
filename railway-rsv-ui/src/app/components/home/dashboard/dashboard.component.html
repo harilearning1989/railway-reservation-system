@@ -18,7 +18,7 @@
         <th>Duration</th>
         <th>Seats</th>
         <th>Fare</th>
-        <th>Halts</th>
+        <!--<th>Halts</th>-->
         <th>Action</th>
       </tr>
       </thead>
@@ -33,7 +33,7 @@
         <td>{{ train.duration }}</td>
         <td>{{ train.totalSeats }}</td>
         <td>{{ train.fare }}</td>
-        <td>{{ train.halts }}</td>
+        <!--<td>{{ train.halts }}</td>-->
         <td style="text-align: center">
           <!--<button class="btn btn-primary btn-sm" (click)="scheduleTrain(train)">Book</button>-->
           <button type="button" class="btn btn-primary" data-bs-toggle="modal"
@@ -149,16 +149,18 @@
       </div>
       <div class="modal-body">
         <div class="row">
-          <div class="col-3">Total Tickets::{{ totalTickets }}</div>
-          <div class="col-3">Booked Tickets</div>
-          <div class="col-3">Available Tickets</div>
-        </div>
+          <div class="col-2 italic-text">Train#::{{ scheduleTrain?.trainNumber }}</div>
+          <div class="col-4 italic-text">Train Name:{{ scheduleTrain?.trainName }}</div>
+          <div class="col-2">Total Tickets::{{ scheduleTrain?.totalSeats }}</div>
+          <div class="col-1">Booked::{{ bookedTickets }}</div>
+          <div class="col-1">Available::{{ availableTickets }}</div>
+        </div><br/>
         <div class="table-wrapper">
           <table class="table table-bordered table-hover table-sm">
             <thead class="thead-light">
             <tr>
-              <th>Train Number</th>
-              <th>Train Name</th>
+              <!--<th>Train Number</th>
+              <th>Train Name</th>-->
               <th>Total Seats</th>
               <th>Fare</th>
               <th>Booked By</th>
@@ -167,10 +169,10 @@
             <tbody>
             <ng-container *ngFor="let book of bookings; let i = index">
               <tr (click)="toggleExpand(i)">
-                <td>{{ book.trainId }}</td>
-                <td>{{ book.trainId }}</td>
+                <!--<td>{{ book.trainId }}</td>
+                <td>{{ book.trainId }}</td>-->
                 <td>{{ book.numberOfSeats }}</td>
-                <td>{{ book.numberOfSeats }}</td>
+                <td>{{ book.numberOfSeats * 400 }}</td>
                 <td>{{ book.username }}</td>
               </tr>
               <tr *ngIf="expandedIndex === i">
@@ -179,7 +181,7 @@
                   <table class="table table-sm table-striped child-table">
                     <thead>
                     <tr>
-                      <th>Child Name</th>
+                      <th>Passenger Name</th>
                       <th>Age</th>
                       <th>Gender</th>
                     </tr>

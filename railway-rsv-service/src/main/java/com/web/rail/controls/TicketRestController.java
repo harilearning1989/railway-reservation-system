@@ -30,7 +30,7 @@ public class TicketRestController {
         BookTicketDto bookTicketDto = ticketService.bookTicket(dto);
         return ResponseHandler.generateResponse(
                 String.format(CommonConstants.TRAIN_SCHEDULE_SUCCESS,
-                        bookTicketDto.username()), HttpStatus.BAD_REQUEST, bookTicketDto);
+                        bookTicketDto.username()), HttpStatus.CREATED, bookTicketDto);
     }
 
     @GetMapping("findAllBookedTickets/{trainId}")

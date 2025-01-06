@@ -5,6 +5,7 @@ import {ScheduleTrainService} from '../../../services/schedule-train.service';
 import {ScheduleTrain} from '../../../models/schedule-train';
 import {BookService} from '../../../services/book.service';
 import {Booking} from '../../../models/booking';
+import {CommonUtilService} from '../../../utils/common-util.service';
 
 declare var bootstrap: any;
 
@@ -30,14 +31,14 @@ export class DashboardComponent implements OnInit {
   modalInstance: any; // Bootstrap modal instance
   bookings: Booking[] = [];
   expandedIndex: number | null = 0;
-  totalTickets: number | undefined = 0;
   bookedTickets: number = 0;
   availableTickets: number = 0;
-
+  scheduleTrain: ScheduleTrain | undefined;
 
   constructor(private scheduleTrainService: ScheduleTrainService,
               private fb: FormBuilder,
-              private bookService: BookService) {
+              private bookService: BookService,
+              private commonUtilService: CommonUtilService) {
     this.bookTicketForm = this.fb.group({
       numberOfSeats: [1, [Validators.required, Validators.min(1)]],
       passengers: this.fb.array([this.createPassenger()])
@@ -179,11 +180,14 @@ export class DashboardComponent implements OnInit {
 
   onOpenDialog(train: ScheduleTrain): void {
     console.log('Dialog opened::', train.id);
-    this.totalTickets = train.totalSeats;
+    this.scheduleTrain = train
     this.bookService.findAllBookedTickets(train.id).subscribe({
       next: (response) => {
         console.log('Success:', response);
         this.bookings = response.data;
+        this.bookedTickets = this.commonUtilService.totalTicketBooked(this.bookings);
+        // @ts-ignore
+        this.availableTickets = train.totalSeats - this.bookedTickets;
 
         const modalElement = document.getElementById('bookedTicketModel');
         if (modalElement) {
